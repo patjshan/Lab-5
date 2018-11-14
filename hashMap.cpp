@@ -11,6 +11,9 @@ hashMap::hashMap(bool hash1, bool coll1){ // initializes hashMap properties
 	mapSize = 137;
 	cout << "calling hashNode array constructor" << endl;
 	map = new hashNode*[mapSize];
+	for(int i = 0; i < mapSize; i++){
+		map[i] = NULL;
+	}
 	h1 = hash1;
 	c1 = coll1;
 	numKeys = 0;
@@ -25,7 +28,7 @@ void hashMap::addKeyValue(string k, string v){ // checks the hash value and adds
 	//value pair if the index is unoccupied, if it is occupied the collision handling
 	//methods are called
 	int index;
-	if (h1){
+	if (h1){ // hash the key to get the intended index
 		cout << "call calc-hash" << endl;
 		index = calcHash(k);
 		cout << "out of calc-hash : "<< index << endl;
@@ -33,12 +36,13 @@ void hashMap::addKeyValue(string k, string v){ // checks the hash value and adds
 	else{
 		index = calcHash2(k);
 	}
-	bool inserted = false;
-	int colls = 0;;
+	bool inserted = false; // flag to tell whether the value has been inserted
+	int colls = 0;
 
 	cout << "in while insertion" << endl;
 
 	while(!inserted){
+		cout<<  "in while : "<< index <<endl;
 		if(map[index] == NULL){ // add the hashNode with key value pair to the hashMap
 			cout << "found NULL index" << endl;
 			map[index] = new hashNode(k , v);
@@ -77,6 +81,7 @@ void hashMap::addKeyValue(string k, string v){ // checks the hash value and adds
 	cout << numKeys << endl;
 
 	if (numKeys * 100 / mapSize >= 70){
+		cout << "calling rehash" << endl;
 		reHash();
 	}
 	cout << "done with addkey" << endl;
@@ -108,6 +113,7 @@ int hashMap::getIndex(string k){
 }
 
 void hashMap::reHash(){
+	cout << "in reHash" << endl;
 	int nwSize = getClosestPrime();
 	hashNode ** tmp = map;
 	map = new hashNode*[nwSize];
@@ -169,6 +175,7 @@ int hashMap::findKey(string k){
 }
 
 int hashMap::getClosestPrime(){
+	cout << "in getclosestprime" << endl;
 	int k;
 	int tmp = mapSize * 2;
 	k = tmp / 6;
