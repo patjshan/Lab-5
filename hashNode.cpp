@@ -13,6 +13,7 @@ hashNode::hashNode(){
 	currSize = 0;
 	keyword = "";
 	values = NULL;
+	searched = false;
 }
 
 hashNode::hashNode(string s){
@@ -20,6 +21,7 @@ hashNode::hashNode(string s){
 	valuesSize = 100;
 	currSize = 0;
 	values = new string[valuesSize];
+	searched = false;
 
 }
 
@@ -29,6 +31,7 @@ hashNode::hashNode(string s, string v){
 	currSize = 1;
 	values = new string[valuesSize];
 	values[0] = v;
+	searched = false;
 
 }
 
@@ -43,7 +46,7 @@ void hashNode::addValue(string v){
 
 void hashNode::dblArray(){
 	int nwvaluesSize = 2 * valuesSize;
-	string dblarr[] = new string[nwvaluesSize];
+	string *dblarr = new string[nwvaluesSize];
 	string *tmparr = values;
 	values = dblarr;
 

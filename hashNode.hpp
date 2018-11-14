@@ -19,6 +19,7 @@ class hashNode {
 	//over all the old values
 	int valuesSize; // the size of the values array
 	int currSize; // the number of words in the values array so far
+	bool searched;
 public:
 	hashNode(); //constructor-initializes keyword to “” , valuesSize to 0, and currSize to 0 and values to NULL
 	hashNode(string s); // initializes keyword to s, the valuesSize to 100 (or whatever you like for starting), the currSize to
