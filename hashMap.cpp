@@ -28,6 +28,7 @@ void hashMap::addKeyValue(string k, string v){ // checks the hash value and adds
 	//value pair if the index is unoccupied, if it is occupied the collision handling
 	//methods are called
 	int index;
+	cout << k << " : " << v << endl;
 	if (h1){ // hash the key to get the intended index
 		cout << "call calc-hash" << endl;
 		index = calcHash(k);
@@ -78,7 +79,7 @@ void hashMap::addKeyValue(string k, string v){ // checks the hash value and adds
 		}
 	}
 	cout << "out of while insert" << endl;
-	cout << numKeys << endl;
+	cout << numKeys << " : numKeys" << endl;
 
 	if (numKeys * 100 / mapSize >= 70){
 		cout << "calling rehash" << endl;
@@ -117,19 +118,36 @@ void hashMap::reHash(){
 	int nwSize = getClosestPrime();
 	hashNode ** tmp = map;
 	map = new hashNode*[nwSize];
-	int i  = 0;
-	while(i < mapSize){
-		int length = tmp[i]->valuesSize;
-		for(int j = 0; j < length; j++){
-			addKeyValue(tmp[i]->keyword, tmp[i]->values[j]);
-		}
+	for(int n = 0; n < nwSize; n++){
+		map[n] = NULL;
 	}
+	int tmpSize = mapSize;
+	mapSize = nwSize;
+	int i  = 0;
+	cout << "entering while for rehash" << endl;
+	while(i < tmpSize){
+		if(tmp[i] == NULL){
+		}
+		else{
+			int length = tmp[i]->valuesSize;
+			for(int j = 0; j < length; j++){
+				if(tmp[i]->values[j] == ""){
 
-	for(int j = 0; j < mapSize; j++){
-		delete [] tmp[j];
+				}
+				else{
+				addKeyValue(tmp[i]->keyword, tmp[i]->values[j]);
+				}
+			}
+		}
+		i++;
+	}
+	cout << "done with while for rehash" << endl;
+
+	for(int j = 0; j < tmpSize; j++){
+		delete tmp[j];
 	}
 	delete[] tmp;
-	mapSize = nwSize;
+	cout << "done with reHash : " << mapSize << endl;
 }
 
 int hashMap::collHash1(int i){ //linear probing
@@ -178,24 +196,27 @@ int hashMap::getClosestPrime(){
 	cout << "in getclosestprime" << endl;
 	int k;
 	int tmp = mapSize * 2;
+	cout << "made tmp" << endl;
 	k = tmp / 6;
 	bool prime = true;
 	for(int j = 2; j < tmp / 2; j++){
-		if(tmp % j == 0){
+		if(6*k + 1 % j == 0){
 			prime = false;
 			break;
 		}
 	}
+	cout << "checked prime" << endl;
 	while(!prime){
 		k ++;
 		for(int j = 2; j < tmp / 2; j++){
-			if(tmp % j == 0){
+			if(6*k + 1 % j == 0){
 				prime = false;
 				break;
 			}
 		}
 	}
-	return 6 * k + 1;
+	cout << "done with getclosestprime" << endl;
+	return (6 * k + 1);
 
 }
 
