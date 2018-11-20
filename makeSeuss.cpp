@@ -20,8 +20,9 @@ makeSeuss::makeSeuss(string f1,string f2,bool h1, bool c1) {
 	ht = new hashMap(h1,c1);
 	newfile = f2;
 	fn = f1;
-	cout << "readfile about to be called" << endl;
+	cout << "read file about to be called" << endl;
 	readFile();
+	cout << "done with read file" << endl;
 	writeFile();
 	cout << "write file called" << endl;
 }
@@ -48,19 +49,22 @@ void makeSeuss::writeFile() {
 	ofstream outfile(newfile.c_str(),ios::out);
 	outfile << ht->first << " ";
 	string key = "";
+	cout << "making a value" << endl;
 	string value = ht->map[ht->getIndex(ht->first)]->getRandValue();
 	int ct = 0;
 	int len = 0;
 	while (ct < 500 && value != "") {
+		cout << value << endl;
 		key = value;
 		outfile << key << " ";
 		if (len == 11) {
 			outfile << "\n";
 			len = 0;
 		}
-		else len++;
+		else {len++;}
 		value = ht->map[ht->getIndex(key)]->getRandValue();
 		ct ++;
+		cout << ct << endl;
 	}
 	outfile.close();
 }

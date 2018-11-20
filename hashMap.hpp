@@ -58,7 +58,7 @@ public:
 	void reHash(); // when size of array is at 70%, double array size and rehash keys
 	int collHash1( int i); // getting index with collision method 1 (note – you may modify the
 	//parameters if you don’t need some/need more)
-	int collHash2(int h, int i); // getting index with collision method 2 (note – you may modify the
+	int collHash2(int colls, int i); // getting index with collision method 2 (note – you may modify the
 	//parameters if you don’t need some/need more)
 	int findKey(string k); //finds the key in the array and returns its index. If it's not in the array,
 	//returns -1

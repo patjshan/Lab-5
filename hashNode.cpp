@@ -37,8 +37,12 @@ hashNode::hashNode(string s, string v){
 
 void hashNode::addValue(string v){
 	int t = 0;
-	while(values[t] != ""){
+	while(values[t] != "" && t < valuesSize){
 		t++;
+	}
+	if (t >= valuesSize){
+		dblArray();
+		addValue(v);
 	}
 	values[t] = v;
 
@@ -65,7 +69,7 @@ string hashNode::getRandValue(){
 	}
 	else{
 		int rvals = rand() % valuesSize - 1;
-		while(values[rvals] == "null"){
+		while(values[rvals] == ""){
 			rvals = rand() % valuesSize - 1;
 		}
 		return values[rvals];

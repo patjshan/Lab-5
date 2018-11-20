@@ -43,7 +43,7 @@ void hashMap::addKeyValue(string k, string v){ // checks the hash value and adds
 	cout << "in while insertion" << endl;
 
 	while(!inserted){
-		cout<<  "in while : "<< index <<endl;
+		//cout<<  "in while : "<< index <<endl;
 		if(map[index] == NULL){ // add the hashNode with key value pair to the hashMap
 			cout << "found NULL index" << endl;
 			map[index] = new hashNode(k , v);
@@ -52,10 +52,13 @@ void hashMap::addKeyValue(string k, string v){ // checks the hash value and adds
 			cout << "added" << endl;
 		}
 		else if (map[index]->keyword == k){ // if the key already exists add the value to the values list
+			//cout << "ahh" << endl;
 			map[index]->addValue(v);
+			cout << "added stuff" << endl;
 			inserted = true;
 		}
 		else if (map[index]->keyword != k && colls < 1){ // if the index already has a different key word add one to the collision counters
+			//cout << "ahhhh" << endl;
 			collisionct1 ++;
 			colls++;
 		}
@@ -85,7 +88,7 @@ void hashMap::addKeyValue(string k, string v){ // checks the hash value and adds
 		cout << "calling rehash" << endl;
 		reHash();
 	}
-	cout << "done with addkey" << endl;
+	cout << "done with addKey" << endl;
 
 }
 
@@ -108,9 +111,33 @@ int hashMap::calcHash2(string k){
 
 }
 int hashMap::getIndex(string k){
-	int tmp = calcHash(k);
-	reHash();
-	return (tmp);
+	int tmp = 0;
+	if(h1){
+		tmp = calcHash(k);
+	}
+	else{
+		tmp = calcHash2(k);
+	}
+	bool found = false;
+	int colls = 0;
+	cout << "get index while" << endl;
+	while(!found){
+		if (map[tmp]->keyword ==  k){
+					found = true;
+		}
+		else if (c1){
+			colls++;
+			tmp = collHash1(tmp);
+		}
+		else{
+			colls ++;
+			tmp = collHash2(colls, tmp);
+			cout << tmp << endl;
+			cout << colls << endl;
+		}
+	}
+	cout << "done with get index" << endl;
+	return tmp;
 }
 
 void hashMap::reHash(){
@@ -193,7 +220,7 @@ int hashMap::findKey(string k){
 }
 
 int hashMap::getClosestPrime(){
-	cout << "in getclosestprime" << endl;
+	cout << "in get closest prime" << endl;
 	int k;
 	int tmp = mapSize * 2;
 	cout << "made tmp" << endl;
